@@ -1,12 +1,15 @@
 #!/bin/bash
 cd /home/container
+set -x
 
 # Make internal Docker IP address available to processes.
 INTERNAL_IP=$(ip route get 1 | awk '{print $(NF-2);exit}')
 export INTERNAL_IP
 
 # Auto update resources from git.
+echo "GIT_ENABLED is set to '${GIT_ENABLED}'"
 if [ "${GIT_ENABLED}" == "true" ] || [ "${GIT_ENABLED}" == "1" ]; then
+  echo "GIT_ENABLED is set, proceeding with git operations..."
 
   # Pre git stuff
   echo "Wait, preparing to pull or clone from Git.";
